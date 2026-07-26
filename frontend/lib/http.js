@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+// In production (Vercel multi-service) the backend shares the same domain,
+// so an empty base means "same origin". Local dev sets NEXT_PUBLIC_API_URL
+// to http://localhost:5000 via .env.local.
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
 const TOKEN_KEY = "tp_token";
 
 export const tokenStore = {
