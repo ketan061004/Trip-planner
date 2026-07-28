@@ -1,8 +1,11 @@
 # ✈️ AI Smart Trip Planner
 
-A premium, AI-powered travel planning app: accounts, a guided multi-step planner,
-destination-based interests with photos, day-by-day itineraries, budgets, saved trips,
-and a personal dashboard.
+[Live demo](https://trip-planner-gamma-nine.vercel.app/)
+
+AI Smart Trip Planner creates personalised, day-by-day travel itineraries from a
+destination, trip duration, interests, travel style, and budget. It also supports
+accounts, saved and shareable trips, a personal dashboard, destination photos, and
+weather-aware planning.
 
 - **Frontend:** Next.js 14 (App Router) + Tailwind + framer-motion + lucide-react
 - **Backend:** Express + MongoDB (Mongoose) + JWT auth
@@ -22,7 +25,9 @@ frontend/   Next.js app (home, auth, /plan wizard, /trip/[id] results, /dashboar
 - Node.js 18+ (built with v24)
 - MongoDB — local (`mongodb://127.0.0.1:27017`) or a free MongoDB Atlas cluster
 
-## 1. Backend setup
+## Run locally
+
+### 1. Backend setup
 
 ```bash
 cd backend
@@ -51,7 +56,7 @@ npm run dev         # http://localhost:5000  (logs "✅ MongoDB connected")
 4. **Connect → Drivers** → copy the `mongodb+srv://…` string, insert your password, set as `MONGODB_URI`.
 5. Restart the backend — collections auto-create on first save.
 
-## 2. Frontend setup
+### 2. Frontend setup
 
 ```bash
 cd frontend
@@ -60,7 +65,7 @@ cp .env.local.example .env.local    # NEXT_PUBLIC_API_URL=http://localhost:5000
 npm run dev                         # http://localhost:3000
 ```
 
-## 3. Use it
+### 3. Use it
 
 1. Open http://localhost:3000
 2. Enter a **From** and **To** on the hero → **Start Planning My Trip**
@@ -85,5 +90,24 @@ Without SMTP configured, `POST /api/auth/forgot-password` returns a `devResetLin
 
 Auth-protected routes require an `Authorization: Bearer <token>` header. The frontend
 stores the JWT in `localStorage` and injects it automatically.
+
+## Deploy to Vercel
+
+This repository includes a root [`vercel.json`](./vercel.json) that deploys the
+Next.js frontend and Express API as separate Vercel services. Requests to `/api/*`
+are routed to the backend; all other requests are served by the frontend.
+
+1. Import this Git repository into Vercel, leaving the project root set to the
+   repository root.
+2. Add the backend environment variables shown in `backend/.env.example`:
+   `MONGODB_URI`, `JWT_SECRET`, `AI_PROVIDER`, the selected AI provider key, and
+   optionally `PEXELS_API_KEY` and `SMTP_*`.
+3. Add `NEXT_PUBLIC_API_URL` for the frontend. For this multi-service deployment,
+   set it to the production site's URL (for example,
+   `https://trip-planner-gamma-nine.vercel.app`) so browser requests reach `/api`.
+4. Deploy. Vercel builds and routes both services according to `vercel.json`.
+
+The current production deployment is available at
+[trip-planner-gamma-nine.vercel.app](https://trip-planner-gamma-nine.vercel.app/).
 
 > Suggestions are AI-generated — verify hotels, prices, and availability before booking.
